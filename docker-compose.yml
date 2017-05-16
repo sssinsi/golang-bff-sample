@@ -1,0 +1,32 @@
+version: "3"
+services:
+  bff:
+    working_dir: /bff
+    build:
+      context: .
+      dockerfile: bff.Dockerfile
+    ports:
+      - "80:3000"
+    volumes:
+      - ./bff:/bff
+    networks:
+      - frontend
+#    links:
+#      - app:app
+    command: go run main.go
+
+  app:
+    working_dir: /var/www/html
+    build:
+      context: .
+      dockerfile: app.Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/var/www/html
+    networks:
+          - frontend
+    command: php -S 0.0.0.0:8080 -t public/ public/index.php
+
+networks:
+  frontend:
