@@ -11,8 +11,8 @@ services:
       - ./bff:/bff
     networks:
       - frontend
-#    links:
-#      - app:app
+    #    links:
+    #      - app:app
     command: go run main.go
 
   app:
@@ -21,11 +21,11 @@ services:
       context: .
       dockerfile: app.Dockerfile
     ports:
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       - ./app:/var/www/html
     networks:
-          - frontend
+      - frontend
     command: php -S 0.0.0.0:8080 -t public/ public/index.php
 
 networks:
